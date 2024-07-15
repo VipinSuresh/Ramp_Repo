@@ -1,13 +1,16 @@
-/* Conevr to unix timestamp */
+/* convert from unix timestamp to date */
+with date_conv as
+(
+ 	SELECT 
+		module_id, 
+		to_timestamp(created_date) AS readable_date
+	FROM modules
+)
+/* use the above readable date to filter */
 SELECT 
-  module_id, 
-  to_timestamp(created_date) AS readable_date
-FROM modules;
-
-/* then filter for the mentioned month and year and sort it */
-SELECT 
-  module_id
-FROM modules
-  WHERE created_date >= 1680307200 AND created_date < 1682899200
-  ORDER BY created_date asc
-  LIMIT 1;
+	module_id
+FROM date_conv
+	WHERE readable_date >= '2023-04-01T00:00:00.000Z' 
+    AND readable_date < '2023-05-01T00:00:00.000Z'
+	ORDER BY readable_date
+	LIMIT 1;
