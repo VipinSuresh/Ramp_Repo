@@ -1,0 +1,13 @@
+/* Conevr to unix timestamp */
+SELECT 
+  module_id, 
+  to_timestamp(created_date) AS readable_date
+FROM modules;
+
+/* then filter for the mentioned month and year and sort it */
+SELECT 
+  module_id
+FROM modules
+  WHERE created_date >= 1680307200 AND created_date < 1682899200
+  ORDER BY created_date asc
+  LIMIT 1;
